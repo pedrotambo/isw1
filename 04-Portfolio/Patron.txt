@@ -1,0 +1,1 @@
+El patrón que se repite es que los Portfolios que tiene un grupo de cuentas, son tratadas a su vez como instancias singulares, es decir como cuentas también. Por lo que estuvimos investigando, este patrón se llama "Composite Pattern."
