@@ -228,13 +228,12 @@ test21WhenThereIsAWinnerGameIsNotTied
 	self deny: game isTied.! !
 
 
-!TicTacToeTest methodsFor: 'support' stamp: 'PFT 5/31/2018 14:38:52'!
+!TicTacToeTest methodsFor: 'support' stamp: 'PFT 5/31/2018 15:20:59'!
 markAllPositionsOf: aCollectionOfMarks
 	aCollectionOfMarks do: [ :mark |
-		game isXTurn
+		game isPlayingX
 			ifTrue: [ game markWithXAt: mark ]
-			ifFalse: [ game markWithOAt: mark ]
-	]! !
+			ifFalse: [ game markWithOAt: mark ]].! !
 
 !TicTacToeTest methodsFor: 'support' stamp: 'PFT 5/31/2018 14:44:50'!
 setUp
@@ -337,31 +336,23 @@ hasPlayerXWon
 
 	^ self hasWon: xs! !
 
-!TicTacToe methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:32:40'!
-isONextTurn
-	^ state isOPlayingNext.! !
-
-!TicTacToe methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:39:30'!
-isOTurn
-	^ state isOPlaying.! !
-
 !TicTacToe methodsFor: 'game info' stamp: 'LR 5/30/2018 18:23:45'!
 isOver
 	
 	^ self hasPlayerXWon or: [self hasPlayerOWon or: [self isTied]]! !
 
+!TicTacToe methodsFor: 'game info' stamp: 'PFT 5/31/2018 15:21:12'!
+isPlayingO
+	^ state isOPlaying.! !
+
+!TicTacToe methodsFor: 'game info' stamp: 'PFT 5/31/2018 15:20:59'!
+isPlayingX
+	^ state isXPlaying.! !
+
 !TicTacToe methodsFor: 'game info' stamp: 'LR 5/30/2018 17:44:21'!
 isTied
 
 	^ xs size = 5 and: [os size = 4 and: [ self hasPlayerXWon not ]].! !
-
-!TicTacToe methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:33:02'!
-isXNextTurn
-	^ state isXPlayingNext.! !
-
-!TicTacToe methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:39:42'!
-isXTurn
-	^ state isXPlaying.! !
 
 
 !TicTacToe methodsFor: 'game interact' stamp: 'LR 5/31/2018 01:55:02'!
@@ -428,29 +419,13 @@ Object subclass: #TicTacToeState
 	poolDictionaries: ''
 	category: 'TicTacToe'!
 
-!TicTacToeState methodsFor: 'initialization' stamp: 'LR 5/31/2018 01:47:38'!
-initializeWith: aTicTacToe
-
-	tictactoe := aTicTacToe! !
-
-
 !TicTacToeState methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:33:59'!
 isOPlaying
 
 	self subclassResponsibility ! !
 
-!TicTacToeState methodsFor: 'game info' stamp: 'LR 5/31/2018 02:05:16'!
-isOPlayingNext
-
-	self subclassResponsibility ! !
-
 !TicTacToeState methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:34:01'!
 isXPlaying
-
-	self subclassResponsibility ! !
-
-!TicTacToeState methodsFor: 'game info' stamp: 'LR 5/31/2018 02:05:19'!
-isXPlayingNext
 
 	self subclassResponsibility ! !
 
@@ -464,6 +439,12 @@ markWithOAt: aPosition
 markWithXAt: aPosition
 
 	self subclassResponsibility ! !
+
+
+!TicTacToeState methodsFor: 'initialization' stamp: 'LR 5/31/2018 01:47:38'!
+initializeWith: aTicTacToe
+
+	tictactoe := aTicTacToe! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -495,15 +476,15 @@ TicTacToeState subclass: #TicTacToeFinished
 	poolDictionaries: ''
 	category: 'TicTacToe'!
 
-!TicTacToeFinished methodsFor: 'game info' stamp: 'LR 5/31/2018 02:04:59'!
-isOPlayingNext
+!TicTacToeFinished methodsFor: 'game info' stamp: 'PFT 5/31/2018 15:17:52'!
+isOPlaying
 
-	^ false! !
+	^false! !
 
-!TicTacToeFinished methodsFor: 'game info' stamp: 'LR 5/31/2018 02:05:02'!
-isXPlayingNext
+!TicTacToeFinished methodsFor: 'game info' stamp: 'PFT 5/31/2018 15:17:54'!
+isXPlaying
 
-	^ false! !
+	^false! !
 
 
 !TicTacToeFinished methodsFor: 'game interact' stamp: 'LR 5/30/2018 18:07:28'!
@@ -542,20 +523,10 @@ isOPlaying
 
 	^ true! !
 
-!TicTacToeIsOTurn methodsFor: 'game info' stamp: 'LR 5/31/2018 02:04:31'!
-isOPlayingNext
-
-	^ false! !
-
 !TicTacToeIsOTurn methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:37:44'!
 isXPlaying
 
 	^ false! !
-
-!TicTacToeIsOTurn methodsFor: 'game info' stamp: 'LR 5/31/2018 02:04:23'!
-isXPlayingNext
-
-	^ true! !
 
 
 !TicTacToeIsOTurn methodsFor: 'game interact' stamp: 'PFT 5/28/2018 21:46:24'!
@@ -577,10 +548,9 @@ markWithXAt: aPosition
 TicTacToeIsOTurn class
 	instanceVariableNames: ''!
 
-!TicTacToeIsOTurn class methodsFor: 'state selection' stamp: 'PFT 5/31/2018 13:49:05'!
+!TicTacToeIsOTurn class methodsFor: 'state selection' stamp: 'PFT 5/31/2018 15:21:12'!
 canHandle: aTicTacToe
-
-	^ aTicTacToe isOver not and: [ aTicTacToe isOTurn not ].! !
+	^ aTicTacToe isOver not and: [ aTicTacToe isPlayingO not ].! !
 
 
 !classDefinition: #TicTacToeIsXTurn category: #TicTacToe!
@@ -595,20 +565,10 @@ isOPlaying
 	
 	^ false! !
 
-!TicTacToeIsXTurn methodsFor: 'game info' stamp: 'LR 5/31/2018 02:04:41'!
-isOPlayingNext
-
-	^ true! !
-
 !TicTacToeIsXTurn methodsFor: 'game info' stamp: 'PFT 5/31/2018 13:34:24'!
 isXPlaying
 	
 	^ true! !
-
-!TicTacToeIsXTurn methodsFor: 'game info' stamp: 'LR 5/31/2018 02:04:48'!
-isXPlayingNext
-
-	^ false! !
 
 
 !TicTacToeIsXTurn methodsFor: 'game interact' stamp: 'LR 5/30/2018 17:06:53'!
@@ -633,7 +593,6 @@ markWithXAt: aPosition
 TicTacToeIsXTurn class
 	instanceVariableNames: ''!
 
-!TicTacToeIsXTurn class methodsFor: 'state selection' stamp: 'PFT 5/31/2018 13:48:56'!
+!TicTacToeIsXTurn class methodsFor: 'state selection' stamp: 'PFT 5/31/2018 15:20:59'!
 canHandle: aTicTacToe
-
-	^ aTicTacToe isOver not and: [ aTicTacToe isXTurn not ].! !
+	^ aTicTacToe isOver not and: [ aTicTacToe isPlayingX not ].! !
