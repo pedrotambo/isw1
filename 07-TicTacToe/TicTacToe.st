@@ -5,32 +5,30 @@ TestCase subclass: #TicTacToeTest
 	poolDictionaries: ''
 	category: 'TicTacToe'!
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:11:37'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:43:07'!
 test01EmptyGameboard
 	
 	self assert: game isEmpty.! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:11:49'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:36:25'!
 test02CanMarkX
 
 	game markWithXAt: 1 @ 1.
 	
-	self assert: 1 equals: game XsCount.
-	self assert: (game XsHasAMarkIn: 1 @ 1).
-	self assert: 0 equals: game OsCount.! !
+	self assertXsSize: 1 withPositions: {1@1}.
+	self assertOsSize: 0 withPositions: {}.
+	! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:11:56'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:36:19'!
 test03CanMarkO
 
 	game markWithXAt: 1 @ 1.
 	game markWithOAt: 2 @ 2.
 	
-	self assert: 1 equals: game XsCount.
-	self assert: (game XsHasAMarkIn: 1 @ 1).
-	self assert: 1 equals: game OsCount.
-	self assert: (game OsHasAMarkIn: 2 @ 2).! !
+	self assertXsSize: 1 withPositions: {1@1}.
+	self assertOsSize: 1 withPositions: {2@2}. ! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:12:00'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:43:41'!
 test04XCanNotMarkTwice
 
 	game markWithXAt: 1 @ 1.
@@ -39,11 +37,10 @@ test04XCanNotMarkTwice
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe notXTurnErrorMessage equals: anError messageText.
-			self assert: 1 equals: game XsCount.
-			self assert: (game XsHasAMarkIn: 1 @ 1).
-			self assert: 0 equals: game OsCount. ].! !
+			self assertXsSize: 1 withPositions: {1@1}.
+			self assertOsSize: 0 withPositions: {}]! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:12:06'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:43:46'!
 test05OCanNotMarkTwice
 
 	game markWithXAt: 1 @ 1.
@@ -53,12 +50,10 @@ test05OCanNotMarkTwice
 		 raise: Error - MessageNotUnderstood
 		 withExceptionDo: [ :anError |
 			self assert: TicTacToe notOTurnErrorMessage equals: anError messageText.
-			self assert: 1 equals: game XsCount.
-			self assert: (game XsHasAMarkIn: 1 @ 1).
-			self assert: 1 equals: game OsCount.
-			self assert: (game OsHasAMarkIn: 2 @ 2) ].! !
+			self assertXsSize: 1 withPositions: {1@1}.
+			self assertOsSize: 1 withPositions: {2@2}]! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:12:11'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:37:50'!
 test06XCanNotMarkPositionMarkedByX
 
 	game markWithXAt: 1 @ 1.
@@ -68,12 +63,10 @@ test06XCanNotMarkPositionMarkedByX
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe positionTakenErrorMessage equals: anError messageText.
-			self assert: 1 equals: game XsCount.
-			self assert: (game XsHasAMarkIn: 1 @ 1).
-			self assert: 1 equals: game OsCount.
-			self assert: (game OsHasAMarkIn: 2 @ 2) ].! !
+			self assertXsSize: 1 withPositions: {1@1}.
+			self assertOsSize: 1 withPositions: {2@2}]! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:12:29'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:43:51'!
 test07XCanNotMarkPositionMarkedByO
 
 	game markWithXAt: 1 @ 1.
@@ -83,12 +76,10 @@ test07XCanNotMarkPositionMarkedByO
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe positionTakenErrorMessage equals: anError messageText.
-			self assert: 1 equals: game XsCount .
-			self assert: (game XsHasAMarkIn: 1 @ 1).
-			self assert: 1 equals: game OsCount .
-			self assert: (game OsHasAMarkIn: 2 @ 2) ].! !
+			self assertXsSize: 1 withPositions: {1@1}.
+			self assertOsSize: 1 withPositions: {2@2}]! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 13:12:34'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:43:55'!
 test08OCanNotMarkPositionMarkedByX
 
 	game markWithXAt: 1 @ 1.
@@ -97,11 +88,10 @@ test08OCanNotMarkPositionMarkedByX
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe positionTakenErrorMessage equals: anError messageText.
-			self assert: 1 equals: game XsCount.
-			self assert: (game XsHasAMarkIn: 1 @ 1).
-			self assert: 0 equals: game OsCount. ].! !
+			self assertXsSize: 1 withPositions: {1@1}.
+			self assertOsSize: 0 withPositions: {}]! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:13:52'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:43:59'!
 test09OCanNotMarkPositionMarkedByO
 
 	self markAllPositionsOf: {1@1. 2@2. 3@3}.
@@ -110,11 +100,8 @@ test09OCanNotMarkPositionMarkedByO
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe positionTakenErrorMessage equals: anError messageText.
-			self assert: 2 equals: game XsCount.
-			self assert: (game XsHasAMarkIn: 1 @ 1).
-			self assert: (game XsHasAMarkIn: 3 @ 3).
-			self assert: 1 equals: game OsCount.
-			self assert: (game OsHasAMarkIn: 2 @ 2) ].! !
+			self assertXsSize: 2 withPositions: {1@1. 3@3}.
+			self assertOsSize: 1 withPositions: {2@2}]! !
 
 !TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:09:43'!
 test10NoWinner
@@ -180,7 +167,7 @@ test17OHasWonInFirstRow
 	self assert: game hasPlayerOWon.
 	self deny: game hasPlayerXWon.! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 14:47:50'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:41:16'!
 test18OCanNotPlayWhenGameIsOver
 
 	self markAllPositionsOf: {1@1. 2@1. 1@2. 3@1. 1@3}.
@@ -189,11 +176,10 @@ test18OCanNotPlayWhenGameIsOver
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe canNotPlayWhenGameIsOverErrorMessage equals: anError messageText.
-			self assert: 2 equals: game OsCount.
-			self assert: (game OsHasAMarkIn: 2 @ 1).
-			self assert: (game OsHasAMarkIn: 3 @ 1)].! !
+			self assertXsSize: 3 withPositions: {1@1. 1@2. 1@3}.
+			self assertOsSize: 2 withPositions: {2@1}]! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 14:47:23'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:42:26'!
 test19XCanNotPlayWhenGameIsOver
 
 	self markAllPositionsOf: {2@2. 1@1. 2@1. 1@2. 3@1. 1@3}.
@@ -202,12 +188,10 @@ test19XCanNotPlayWhenGameIsOver
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: TicTacToe canNotPlayWhenGameIsOverErrorMessage equals: anError messageText.
-			self assert: 3 equals: game XsCount.
-			self assert: (game XsHasAMarkIn: 2 @ 2).
-			self assert: (game XsHasAMarkIn: 2 @ 1).
-			self assert: (game XsHasAMarkIn: 3 @ 1)].! !
+			self assertXsSize: 3 withPositions: {2@2. 2@1. 3@1}.
+			self assertOsSize: 3 withPositions: {1@1. 1@2. 1@3}].! !
 
-!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 14:46:43'!
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:45:27'!
 test20TiedGame
 
 	self markAllPositionsOf: {2@2. 1@1. 1@3. 3@1. 2@1. 2@3. 1@2. 3@2. 3@3}.
@@ -215,7 +199,8 @@ test20TiedGame
 	self assert: game isOver.
 	self deny: game hasPlayerXWon.
 	self deny: game hasPlayerOWon.
-	self assert: game isTied.! !
+	self assert: game isTied.
+! !
 
 !TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 14:45:50'!
 test21WhenThereIsAWinnerGameIsNotTied
@@ -227,6 +212,47 @@ test21WhenThereIsAWinnerGameIsNotTied
 	self deny: game hasPlayerOWon.
 	self deny: game isTied.! !
 
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:50:12'!
+test22BoardIsCompleteWhenGameIsTied
+
+	self markAllPositionsOf: {2@2. 1@1. 1@3. 3@1. 2@1. 2@3. 1@2. 3@2. 3@3}.
+
+	self assert: game isTied.
+	self assertXsSize: 5 withPositions: {2@2. 1@3. 2@1. 1@2. 3@3}.
+	self assertOsSize: 4 withPositions: {1@1. 3@1. 2@3. 3@2}.
+
+! !
+
+!TicTacToeTest methodsFor: 'testing' stamp: 'PFT 5/31/2018 15:52:05'!
+test23BoardIsCompleteWhenXWonInLastMove
+	
+	self markAllPositionsOf: { 2@2 .1@2. 1@1. 2@1. 1@3. 2@3. 3@2. 3@1. 3@3 }.
+
+	self assert: (game isOver and: game hasPlayerXWon).
+	self assertXsSize: 5 withPositions: {2@2. 1@1. 1@3. 3@2. 3@3}.
+	self assertOsSize: 4 withPositions: {1@2. 2@1. 2@3. 3@1}
+! !
+
+
+!TicTacToeTest methodsFor: 'support' stamp: 'PFT 5/31/2018 15:31:31'!
+assertOsSize: aNumber withPositions: aOsCollectionOfPositions
+
+	self assert: aNumber equals: game OsCount.
+	aOsCollectionOfPositions do: [:position |
+		
+		self assert: (game OsHasAMarkIn: position)
+		
+	].! !
+
+!TicTacToeTest methodsFor: 'support' stamp: 'PFT 5/31/2018 15:31:14'!
+assertXsSize: aNumber withPositions: aXsCollectionOfPositions
+
+	self assert: aNumber equals: game XsCount.
+	aXsCollectionOfPositions do: [:position |
+		
+		self assert: (game XsHasAMarkIn: position)
+		
+	].! !
 
 !TicTacToeTest methodsFor: 'support' stamp: 'PFT 5/31/2018 15:20:59'!
 markAllPositionsOf: aCollectionOfMarks
