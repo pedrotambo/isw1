@@ -88,9 +88,9 @@ test07canAddMultipleUnitsOfASameProductFromCatalogue
 	self assert: unitsCount equals: (aCart unitsOf: aProduct).
 	! !
 
-!CartTest methodsFor: 'testing' stamp: 'PFT 6/7/2018 14:11:55'!
+!CartTest methodsFor: 'testing' stamp: 'PFT 6/7/2018 14:22:37'!
 test08canAddMultipleUnitsForMoreThanOneProduct
-	| unitsCountForA unitsCountForB |
+	| unitsCountForA unitsCountForB products |
 
 	unitsCountForA := 3.
 	unitsCountForB := 2.
@@ -102,6 +102,10 @@ test08canAddMultipleUnitsForMoreThanOneProduct
 	self assert: (unitsCountForA+unitsCountForB) equals: aCart productsCount.
 	self assert: unitsCountForA equals: (aCart unitsOf: aProductA).
 	self assert: unitsCountForB equals: (aCart unitsOf: aProductB).
+	
+	products := aCart products.
+	self assert: (products includes: aProductA).
+	self assert: (products includes: aProductB).
 	! !
 
 !CartTest methodsFor: 'testing' stamp: 'PFT 6/7/2018 14:12:17'!
@@ -142,6 +146,11 @@ includes: aProduct
 isEmpty
 
 	^productsUnits keys isEmpty! !
+
+!Cart methodsFor: 'accesing' stamp: 'PFT 6/7/2018 14:20:43'!
+products
+
+	^ productsUnits keys copy! !
 
 !Cart methodsFor: 'accesing' stamp: 'LR 6/6/2018 22:53:09'!
 productsCount
